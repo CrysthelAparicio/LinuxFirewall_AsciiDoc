@@ -5,7 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="========================================">
 <title>Linux - Firewall</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -441,32 +440,42 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="article toc2 toc-left data-line-1">
 <div id="header">
 <h1>Linux - Firewall</h1>
-<div class="details">
-<span id="author" class="author">========================================</span><br>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Índice de Contenido</div>
 <ul class="sectlevel1">
 <li><a href="#_autores">1. <span class="icon"><i class="fa fa-group"></i></span> Autores</a></li>
 <li><a href="#_introducción">2. <span class="icon"><i class="fa fa-file"></i></span> Introducción</a></li>
-<li><a href="#_tables">3. <span class="icon"><i class="fa fa-wrench"></i></span> Tables</a>
+<li><a href="#_objetivos">3. <span class="icon"><i class="fa fa-file"></i></span> Objetivos</a></li>
+<li><a href="#_antecedentes">4. <span class="icon"><i class="fa fa-file"></i></span> Antecedentes</a></li>
+<li><a href="#_evidencia">5. <span class="icon"><i class="fa fa-file"></i></span> Evidencia</a></li>
+<li><a href="#_firewall">6. <span class="icon"><i class="fa fa-wrench"></i></span> Firewall</a>
 <ul class="sectlevel2">
-<li><a href="#_nftables">3.1. NFTABLES</a>
+<li><a href="#_iptables">6.1. iptables</a>
 <ul class="sectlevel3">
-<li><a href="#_por_qué_usar_nftables">3.1.1. ¿Por qué usar NFTABLES?</a></li>
-<li><a href="#_trabajar_con_tablas">3.1.2. Trabajar con TABLAS</a></li>
-<li><a href="#_manual_de_configuración">3.1.3. MANUAL DE CONFIGURACIÓN</a></li>
-<li><a href="#_script">3.1.4. Script</a></li>
+<li><a href="#_acerca_de_iptables">6.1.1. Acerca de iptables</a></li>
+<li><a href="#_instalación">6.1.2. Instalación</a></li>
+<li><a href="#_configuración">6.1.3. Configuración</a></li>
+<li><a href="#_operación">6.1.4. Operación</a></li>
+<li><a href="#_validación">6.1.5. Validación</a></li>
+</ul>
+</li>
+<li><a href="#_nftables_actualización">6.2. nftables (Actualización)</a>
+<ul class="sectlevel3">
+<li><a href="#_por_qué_usar_nftables">6.2.1. ¿Por qué usar nftables?</a></li>
+<li><a href="#_trabajar_con_tablas">6.2.2. Trabajar con TABLAS</a></li>
+<li><a href="#_manual_de_configuración">6.2.3. MANUAL DE CONFIGURACIÓN</a></li>
+<li><a href="#_script">6.2.4. Script</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_bibliografia"><span class="icon"><i class="fa fa-book"></i></span> Bibliografia</a></li>
+<li><a href="#_conclusiones_y_recomendaciones">7. <span class="icon"><i class="fa fa-file"></i></span> Conclusiones y Recomendaciones</a></li>
+<li><a href="#_bibliografía"><span class="icon"><i class="fa fa-book"></i></span> Bibliografía</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1 data-line-16">
+<div class="sect1 data-line-15">
 <h2 id="_autores">1. <span class="icon"><i class="fa fa-group"></i></span> Autores</h2>
 <div class="sectionbody">
 <div class="ulist data-line-1">
@@ -478,7 +487,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="icon"><i class="fa fa-inbox"></i></span> <a href="mailto:crysthel.aparicio@unitec.edu">crysthel.aparicio@unitec.edu</a></p>
 </li>
 <li class="data-line-3">
-<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-18-1 20:00 CST</p>
+<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-09-20 20:00 CST</p>
 </li>
 </ul>
 </div>
@@ -492,7 +501,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="icon"><i class="fa fa-inbox"></i></span> <a href="mailto:cristhianalvarez96@gmail.com">cristhianalvarez96@gmail.com</a></p>
 </li>
 <li class="data-line-9">
-<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-18-1 20:00 CST</p>
+<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-09-20 20:00 CST</p>
 </li>
 </ul>
 </div>
@@ -506,7 +515,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="icon"><i class="fa fa-inbox"></i></span> <a href="mailto:ilich-garcia@hotmail.com">ilich-garcia@hotmail.com</a></p>
 </li>
 <li class="data-line-15">
-<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-18-1 20:00 CST</p>
+<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-09-20 20:00 CST</p>
 </li>
 </ul>
 </div>
@@ -520,26 +529,437 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><span class="icon"><i class="fa fa-inbox"></i></span> <a href="mailto:abialvarado14@unitec.edu">abialvarado14@unitec.edu</a></p>
 </li>
 <li class="data-line-21">
-<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-18-1 20:00 CST</p>
+<p><span class="icon"><i class="fa fa-calendar"></i></span> 2020-09-20 20:00 CST</p>
 </li>
 </ul>
 </div>
 <hr>
 </div>
 </div>
-<div class="sect1 data-line-20">
+<div class="sect1 data-line-19">
 <h2 id="_introducción">2. <span class="icon"><i class="fa fa-file"></i></span> Introducción</h2>
 <div class="sectionbody">
-
+<div class="paragraph data-line-1">
+<p>Tenemos claro que los virus no son la única amenaza que existe en el mundo informático, pero sí conocemos de la importancia de mantener la seguridad en nuestras máquinas. El cortafuego es una de estas herramientas de seguridad, y una de las más útiles, pues su propósito es limitar qué entra y qué sale en nuestra red local a través de internet.</p>
+</div>
+<div class="paragraph data-line-3">
+<p>Es posible encontrar cortafuegos para cualquier dispositivo. Incluso, el <em>router</em> que nos proporciona el acceso a internet funge como un cortafuego principal, pues a través de él se administra toda la información que recibimos o compartimos por la red. Para esto, existen distribuciones cuya única tarea es funcionar como <em>firewall</em> o <em>router</em>, así como otras características de seguridad. De esta forma, no sólo podremos utilizar el <em>router</em> para acceder a la red, sino que podremos configurarlo como una segunda barrera personalizada, y así lograr que nuestra red sea segura.</p>
+</div>
+<div class="paragraph data-line-5">
+<p>Un cortafuegos o <em>firewall</em> es un dispositivo, ya sea de <em>hardware</em> o de <em>software</em>, que filtra todo el tráfico de red con el objetivo de brindar mayor seguridad al sistema. Un <em>firewall</em> es como un personal de seguridad, como una persona que solamente deja entrar el tráfico deseado y que bloquea el tráfico que no le interesa.</p>
+</div>
+<div class="paragraph data-line-7">
+<p>A pesar de que en <em>Linux</em> posee muchas opciones para mantener el sistema protegido utilizando un cortafuego, en ocasiones hacer uso de algunas herramientas puede ser un tanto complicado para personas que no tienen conocimientos elevados.</p>
+</div>
+<div class="paragraph data-line-9">
+<p>En esta ocasión, haremos una implementación de <em>IPTables</em> y de <em>NFTables</em> (una evolución de <em>IPTables</em>). <strong><em>IPTables</em></strong> es un <em>firewall</em> incluido en el kernel de <em>Linux</em> desde la versión 2.4. Es un <em>firewall</em> con un nivel alto en complejidad que está basado en reglas, y su funcionamiento se fundamenta en aplicar reglas que el mismo <em>firewall</em> ejecute, señalando que estas <em>IPTables</em> se encuentran en dispositivos <em>Android</em>, así como en firmwares basados en <em>Linux</em>.</p>
+</div>
+<div class="paragraph data-line-21">
+<p>Por el otro lado, <strong><em>NFTables</em></strong> es la evolución hacia el filtrado de paquetes que hasta ahora representaba <em>IPTables</em>, se encuentra disponible desde kernels de <em>Linux</em> con versión 3.13. Posee una interfaz de comando diferente a <em>IPTables</em> y proporciona una nueva infraestructura con la que podremos construir concatenaciones y mapas. Esto nos permite organizar un conjunto de reglas en un árbol multidimensional, reduciendo de forma drástica la cantidad de reglas que se tienen que consultar hasta encontrar la acción que se aplica en el paquete.</p>
+</div>
 </div>
 </div>
 <div class="sect1 data-line-23">
-<h2 id="_tables">3. <span class="icon"><i class="fa fa-wrench"></i></span> Tables</h2>
+<h2 id="_objetivos">3. <span class="icon"><i class="fa fa-file"></i></span> Objetivos</h2>
+<div class="sectionbody">
+<div class="ulist data-line-1">
+<ul>
+<li class="data-line-1">
+<p>Conocer la importancia del uso de las distintas formas de proteger a nuestros dispositivos contra los ataques a los que los sistemas informáticos están expuestos.</p>
+</li>
+<li class="data-line-2">
+<p>Comprender la utilidad de <em>IPTables</em> en un entorno <em>Linux</em> para ámbito personal, educativo, e incluso profesional.</p>
+</li>
+<li class="data-line-3">
+<p>Desarrollar una implementación del uso del <em>firewall</em> <em>IPTables</em> que ejemplifique el funcionamiento de esta herramienta.</p>
+</li>
+<li class="data-line-4">
+<p>Realizar una utilización de buenas prácticas en cuanto a la reducción de código e inconsistencias que serán mejor representadas mediante otra implementación correspondiente a <em>NFTables</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-27">
+<h2 id="_antecedentes">4. <span class="icon"><i class="fa fa-file"></i></span> Antecedentes</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-1">
+<p>El proyecto <em>Netfilter/IPTables</em> comenzó en 1998 por Rusty Russell, quien también fue autor del proyecto que lo precedió: <strong><em>IPChains</em></strong>. Según el proyecto iba creciendo, se fundó el <strong><em>Netfilter Core Team</em></strong> (o simplemente el <em>coreteam</em>) en 1999.</p>
+</div>
+<div class="paragraph data-line-3">
+<p>Antes de <em>IPTables</em>, los programas más utilizados para crear cortafuegos en <em>Linux</em> eran <em>IPChains</em> en el núcleo <em>Linux</em> 2.2, e <em>IPfwadm</em> en el núcleo <em>Linux</em> 2.0. Tanto <em>IPChains</em> como <em>IPfwadm</em> alteran el código de red para manipular los paquetes, pues no existía un <em>framework</em> general para administrar paquetes hasta la aparición de <em>Netfilter</em>.</p>
+</div>
+<div class="paragraph data-line-5">
+<p><em>IPTables</em> mantiene la idea básica introducida en <em>Linux</em> con <em>IPfwadm</em>: Listas de reglas donde se especifica qué matchear dentro de un paquete y qué hacer con ese paquete. <em>IPChains</em> agrega el concepto de cadenas de reglas (<em>chains</em>) e <em>IPTables</em> extendió esto a la idea de tablas: Se consultaba una tabla para decidir si había que <em>NATear</em> un paquete, y se consultaba otra para decidir cómo se filtraría un paquete. Además de esto, fueron modificados los 3 puntos en los que se realiza el filtrado en el viaje de un paquete, de modo que un paquete pase sólo por un punto de filtrado.</p>
+</div>
+<div class="paragraph data-line-29">
+<p>Mientras que <em>IPChains</em> e <em>IPfwadm</em> combinan filtrado de paquetes y NAT (específicamente tres tipos de NAT, llamados <em>masquerading</em> o enmascaramiento de IP, <em>port forwarding</em> o redireccionamiento de puertos, y <em>redirection</em> o redirección), <em>NETFilter</em> hace posible por su parte separar las operaciones sobre los paquetes en tres partes: <em>Packet filtering</em> (filtrado de paquetes), <em>connection tracking</em> (seguimiento de conexiones) y <em>Network Address Translation</em> (NAT o traducción de direcciones de red).</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-31">
+<h2 id="_evidencia">5. <span class="icon"><i class="fa fa-file"></i></span> Evidencia</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-1">
+<p>Esta división permite a <em>IPTables</em> usar la información que la capa de seguimiento de conexiones ha determinado acerca del paquete: esta información estaba antes asociada a NAT. Esto hace a <em>IPTables</em> superior a <em>IPChains</em>, ya que tiene la habilidad de monitorear el estado de una conexión y redirigir, modificar o detener los paquetes de datos basados en el estado de la conexión y no solamente por el origen, destino o contenido del paquete.</p>
+</div>
+<div class="paragraph data-line-3">
+<p>Un cortafuego que utilice <em>IPTables</em> de este modo se llama cortafuegos <em>stateful</em>, contrario a <em>IPChains</em> que sólo permite crear un cortafuego <em>stateless</em> (excepto en casos muy limitados). Podemos decir entonces que <em>IPChains</em> no está al tanto del contexto completo en el cual un paquete surge, mientras que <em>IPTables</em> sí, y por lo tanto <em>IPTables</em> puede hacer mejores decisiones sobre el futuro de los paquetes y las conexiones.</p>
+</div>
+<div class="paragraph data-line-5">
+<p><em>IPTables</em>, el subsistema NAT y el subsistema de seguimiento de conexiones son también extensibles, y muchas extensiones ya están incluidas en el paquete básico de <em>IPTables</em>, tal como la extensión ya mencionada que permite la consulta del estado de la conexión. Extensiones adicionales se distribuyen junto a la utilidad <em>IPTables</em>, como parches al código fuente del núcleo junto con una herramienta llamada <strong><em>patch-o-matic</em></strong>, que permite aplicar los parches.</p>
+</div>
+<div class="paragraph data-line-33">
+<p>Una versión de <em>IPTables</em> para IPv6 ya fue escrita, llamada <strong><em>IP6Tables</em></strong>, al igual que la herramienta de administración.</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-35">
+<h2 id="_firewall">6. <span class="icon"><i class="fa fa-wrench"></i></span> Firewall</h2>
 <div class="sectionbody">
 <div class="sect2 data-line-1">
-<h3 id="_nftables">3.1. NFTABLES</h3>
+<h3 id="_iptables">6.1. iptables</h3>
+<div class="sect3 data-line-4">
+<h4 id="_acerca_de_iptables">6.1.1. Acerca de iptables</h4>
+<hr>
+<div class="paragraph data-line-8">
+<p>Desde la versión 2.4 del Kernel de Linux, se imnplementó <em>iptables</em> como firewall principal del sistema operativo.</p>
+</div>
+<div class="paragraph data-line-10">
+<p>Este se basa en la declaración de reglas y políticas.
+El objetivo de estas declaraciones, es que el firewall pueda leerlas y ejecutar operaciones que mantengan la integridad de la red con respecto a estas.</p>
+</div>
+<div class="paragraph data-line-13">
+<p>Generalmente podemos encontrar instalado este paquete en nuestros firmwares basados en Linux, incluyendo Android.
+Sin embargo, solo soporta ipv4, para ipv6 se necesita utilizar en su lugar <em>ip6tables</em>.</p>
+</div>
+</div>
+<div class="sect3 data-line-16">
+<h4 id="_instalación">6.1.2. Instalación</h4>
+<hr>
+<div class="paragraph data-line-20">
+<p>Si bien es cierto, <em>iptables</em> se considera un paquete esencial en las distribuciones Linux, a continuación mostramos su instalación manual, sólo se requiere iniciar la consola en modo superusuario o agregar el comando <em>sudo</em> al inicio de cada línea.</p>
+</div>
+<div class="sect4 data-line-22">
+<h5 id="_verificación_inicial">6.1.2.1. Verificación Inicial</h5>
+<div class="olist arabic data-line-24">
+<ol class="arabic">
+<li class="data-line-24">
+<p>Ejecutar <strong><em>iptables -L</em></strong></p>
+<div class="imageblock text-center data-line-26">
+<div class="content">
+<img src="images/iptables1-1.png" alt="iptables1 1">
+</div>
+</div>
+<div class="paragraph data-line-28">
+<p>Comprobamos que <em>iptables</em> no está instalado en la máquina.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-30">
+<h5 id="_instalación_2">6.1.2.2. Instalación</h5>
+<div class="olist arabic data-line-32">
+<ol class="arabic">
+<li class="data-line-32">
+<p>Ejecutar <strong><em>apt-get update</em></strong></p>
+<div class="imageblock text-center data-line-34">
+<div class="content">
+<img src="images/iptables2-1.png" alt="iptables2 1">
+</div>
+</div>
+</li>
+<li class="data-line-36">
+<p>Ejecutar <strong><em>apt-get install iptables</em></strong></p>
+<div class="imageblock text-center data-line-38">
+<div class="content">
+<img src="images/iptables2-2.png" alt="iptables2 2">
+</div>
+</div>
+<div class="imageblock text-center data-line-40">
+<div class="content">
+<img src="images/iptables2-3.png" alt="iptables2 3">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-42">
+<h5 id="_verificación_de_instalación">6.1.2.3. Verificación de Instalación</h5>
+<div class="olist arabic data-line-44">
+<ol class="arabic">
+<li class="data-line-44">
+<p>Ejecutar <strong><em>iptables -L</em></strong></p>
+<div class="imageblock text-center data-line-46">
+<div class="content">
+<img src="images/iptables3-1.png" alt="iptables3 1">
+</div>
+</div>
+<div class="paragraph data-line-48">
+<p>Comprobamos que <em>iptables</em> está instalado en la máquina.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3 data-line-50">
+<h4 id="_configuración">6.1.3. Configuración</h4>
+<hr>
+<div class="sect4 data-line-53">
+<h5 id="_creación_de_archivo_de_configuración_iptables_config_bash">6.1.3.1. Creación de Archivo de configuración - <em>iptables.config.bash</em></h5>
+<div class="paragraph data-line-55">
+<p>Si bien es cierto, existen comandos que directamente configuran las reglas y políticas, optamos por definir estas en un sólo archivo para poder dar un seguimiento, mantenimiento y administración del firewall de una manera más amigable y clara.</p>
+</div>
+<div class="olist arabic data-line-57">
+<ol class="arabic">
+<li class="data-line-57">
+<p>Ejecutar <strong><em>vi iptables.config.bash</em></strong></p>
+<div class="imageblock text-center data-line-59">
+<div class="content">
+<img src="images/iptables4-1.png" alt="iptables4 1">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-62">
+<h5 id="_eliminación_de_reglas_existentes">6.1.3.2. Eliminación de Reglas Existentes</h5>
+<div class="paragraph data-line-64">
+<p>En caso de querer configurar el firewall desde cero, omitiendo las reglas presetablecidas por el sistema o por un usuario previo, eliminamos las reglas activas existentes.</p>
+</div>
+<div class="olist arabic data-line-66">
+<ol class="arabic">
+<li class="data-line-66">
+<p>Añadir <strong><em>iptables -F</em></strong> (Borra las reglas de una cadena)</p>
+</li>
+<li class="data-line-68">
+<p>Añadir <strong><em>iptables -X</em></strong> (Borra una cadena)</p>
+</li>
+<li class="data-line-70">
+<p>Añadir <strong><em>iptables -Z</em></strong> (Reinicia a 0, los contadores de una cadena)</p>
+</li>
+<li class="data-line-72">
+<p>Añadir <strong><em>iptables -t nat -F</em></strong> (Borra las reglas la tabla de enrutamiento <em>nat</em>)</p>
+<div class="imageblock text-center data-line-74">
+<div class="content">
+<img src="images/iptables4-2.png" alt="iptables4 2">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-76">
+<h5 id="_políticas_por_defecto">6.1.3.3. Políticas por defecto</h5>
+<div class="paragraph data-line-78">
+<p>Por defecto se debe configurar el firewall de manera que acepte todas las conexiones.</p>
+</div>
+<div class="olist arabic data-line-80">
+<ol class="arabic">
+<li class="data-line-80">
+<p>Añadir <strong><em>iptables -P INPUT ACCEPT</em></strong> (Aceptar conexiones entrantes)</p>
+</li>
+<li class="data-line-82">
+<p>Añadir <strong><em>iptables -P FORWARD ACCEPT</em></strong> (Aceptar conexiones internas)</p>
+</li>
+<li class="data-line-84">
+<p>Añadir <strong><em>iptables -P OUTPUT ACCEPT</em></strong> (Aceptar conexiones salientes)</p>
+</li>
+<li class="data-line-86">
+<p>Añadir <strong><em>iptables -t nat -P PREROUTING ACCEPT</em></strong> (Aceptar conexiones destino de la tabla nat)</p>
+</li>
+<li class="data-line-88">
+<p>Añadir <strong><em>iptables -t nat -P POSTROUTING ACCEPT</em></strong> (Aceptar conexiones origen de la tabla nat)</p>
+<div class="imageblock text-center data-line-90">
+<div class="content">
+<img src="images/iptables4-3.png" alt="iptables4 3">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-92">
+<h5 id="_comunicaciones_localhost">6.1.3.4. Comunicaciones <em>localhost</em></h5>
+<div class="paragraph data-line-94">
+<p>Para evitar errores en el sistema, aceptamos todas las comunicaciones del localhost.</p>
+</div>
+<div class="olist arabic data-line-96">
+<ol class="arabic">
+<li class="data-line-96">
+<p>Añadir <strong><em>iptables -A INPUT -p tcp -s localhost -j ACCEPT</em></strong> (Aceptar conexiones entrantes)</p>
+<div class="imageblock text-center data-line-98">
+<div class="content">
+<img src="images/iptables4-4.png" alt="iptables4 4">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-100">
+<h5 id="_comunicaciones_personalizadas_denegación">6.1.3.5. Comunicaciones <em>Personalizadas</em> (Denegación)</h5>
+<div class="paragraph data-line-102">
+<p>Denegamos las comunicaciones que no nos interesan.</p>
+</div>
+<div class="olist arabic data-line-104">
+<ol class="arabic">
+<li class="data-line-104">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.1.0/24 -j DROP</em></strong> (Ejemplo: Denegamos las comunicaciones en la red 10.0.1.0/24)</p>
+<div class="imageblock text-center data-line-106">
+<div class="content">
+<img src="images/iptables4-5.png" alt="iptables4 5">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-108">
+<h5 id="_comunicaciones_personalizadas_aceptación_de_puertos">6.1.3.6. Comunicaciones <em>Personalizadas</em> (Aceptación de Puertos)</h5>
+<div class="paragraph data-line-110">
+<p>Aceptamos las comunicaciones de los puertos que nos interesan.</p>
+</div>
+<div class="olist arabic data-line-112">
+<ol class="arabic">
+<li class="data-line-112">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p tcp --dport 25 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto tcp 25)</p>
+</li>
+<li class="data-line-114">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p tcp --dport 110 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto tcp 110)</p>
+</li>
+<li class="data-line-116">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p tcp --dport 20 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto tcp 20)</p>
+</li>
+<li class="data-line-118">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p tcp --dport 21 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto tcp 21)</p>
+</li>
+<li class="data-line-120">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p tcp --dport 53 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto tcp 53)</p>
+</li>
+<li class="data-line-122">
+<p>Añadir <strong><em>iptables -A FORWARD -s 10.0.0.0/8 -p udp --dport 53 -j ACCEPT</em></strong> (Ejemplo: Aceptamos las comunicaciones en el puerto udp 53)</p>
+<div class="imageblock text-center data-line-124">
+<div class="content">
+<img src="images/iptables4-6.png" alt="iptables4 6">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-126">
+<h5 id="_nat">6.1.3.7. NAT</h5>
+<div class="paragraph data-line-128">
+<p>Activamos el enmascaramiento en la tabla <em>nat</em>.</p>
+</div>
+<div class="olist arabic data-line-130">
+<ol class="arabic">
+<li class="data-line-130">
+<p>Añadir <strong><em>iptables -t nat -A POSTROUTING -s 10.0.0.0/8 -o eth0 -j MASQUERADE</em></strong></p>
+<div class="imageblock text-center data-line-132">
+<div class="content">
+<img src="images/iptables4-7.png" alt="iptables4 7">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-134">
+<h5 id="_activación_de_configuraciones_de_enrutamiento">6.1.3.8. Activación de Configuraciones de Enrutamiento</h5>
+<div class="paragraph data-line-136">
+<p>Activamos las configuraciones del enrutamiento.</p>
+</div>
+<div class="olist arabic data-line-138">
+<ol class="arabic">
+<li class="data-line-138">
+<p>Añadir <strong><em>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</em></strong></p>
+<div class="imageblock text-center data-line-140">
+<div class="content">
+<img src="images/iptables4-8.png" alt="iptables4 8">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-142">
+<h5 id="_guardar_configuraciones">6.1.3.9. Guardar configuraciones</h5>
+
+</div>
+</div>
+<div class="sect3 data-line-144">
+<h4 id="_operación">6.1.4. Operación</h4>
+<hr>
+<div class="sect4 data-line-147">
+<h5 id="_asignación_de_permisos_del_archivo_de_configuración_iptables_config_bash">6.1.4.1. Asignación de Permisos del Archivo de configuración - <em>iptables.config.bash</em></h5>
+<div class="paragraph data-line-149">
+<p>Para poder ejecutar el archivo creado, necesitamos darle permisos de ejecución.</p>
+</div>
+<div class="olist arabic data-line-151">
+<ol class="arabic">
+<li class="data-line-151">
+<p>Ejecutar <strong><em>chmod 4777 ./iptables.config.bash</em></strong></p>
+<div class="imageblock text-center data-line-153">
+<div class="content">
+<img src="images/iptables5-1.png" alt="iptables5 1">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4 data-line-155">
+<h5 id="_ejecución_creación_de_archivo_de_configuración_iptables_config_bash">6.1.4.2. Ejecución Creación de Archivo de configuración - <em>iptables.config.bash</em></h5>
+<div class="paragraph data-line-157">
+<p>Para que las configuraciones que escribimos se apliquen, procedemos a ejecutar el archivo que creamos.</p>
+</div>
+<div class="olist arabic data-line-159">
+<ol class="arabic">
+<li class="data-line-159">
+<p>Ejecutar <strong><em>bash ./iptables.config.bash</em></strong></p>
+<div class="imageblock text-center data-line-161">
+<div class="content">
+<img src="images/iptables5-2.png" alt="iptables5 2">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3 data-line-163">
+<h4 id="_validación">6.1.5. Validación</h4>
+<hr>
+<div class="paragraph data-line-167">
+<p>Para visualizar las reglas activas ejecutamos el comando.</p>
+</div>
+<div class="olist arabic data-line-169">
+<ol class="arabic">
+<li class="data-line-169">
+<p>Ejecutar <strong><em>iptables -L -v</em></strong></p>
+<div class="imageblock text-center data-line-171">
+<div class="content">
+<img src="images/iptables6-1.png" alt="iptables6 1">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph data-line-37">
+<p>Podemos ver que las reglas que especificamos ya están activas, por lo tanto, el firewall está activo y configurado.</p>
+</div>
+</div>
+</div>
+<div class="sect2 data-line-1">
+<h3 id="_nftables_actualización">6.2. nftables (Actualización)</h3>
 <div class="paragraph data-line-3">
-<p>NFTABLES es la evolución hacia el filtrado de paquetes que hasta ahora representaba <em>iptables</em>.</p>
+<p>nftables es la evolución hacia el filtrado de paquetes que hasta ahora representaba <em>iptables</em>.</p>
 </div>
 <div class="ulist data-line-5">
 <ul>
@@ -555,7 +975,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="sect3 data-line-10">
-<h4 id="_por_qué_usar_nftables">3.1.1. ¿Por qué usar NFTABLES?</h4>
+<h4 id="_por_qué_usar_nftables">6.2.1. ¿Por qué usar nftables?</h4>
 <div class="ulist data-line-12">
 <ul>
 <li class="data-line-12">
@@ -576,7 +996,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="sect4 data-line-18">
-<h5 id="_ganchos_netfilter_netfilter_hooks">3.1.1.1. <strong>Ganchos Netfilter (Netfilter Hooks)</strong></h5>
+<h5 id="_ganchos_netfilter_netfilter_hooks">6.2.1.1. <strong>Ganchos Netfilter (Netfilter Hooks)</strong></h5>
 <div class="paragraph data-line-20">
 <p>nftables reutiliza la infraestructura de enlace existente, el sistema de seguimiento de conexiones, el motor NAT, el registro de infraestructura, la gestión de colas, etc. Por lo tanto, solo se ha reemplazado la infraestructura de clasificación de paquetes.</p>
 </div>
@@ -594,7 +1014,7 @@ Y luego, los paquetes que no están destinados a nuestra máquina serán vistos 
 </div>
 </div>
 <div class="sect4 data-line-29">
-<h5 id="_gancho_hook_de_entrada_ingress">3.1.1.2. <strong>GANCHO (HOOK) DE ENTRADA (INGRESS)</strong></h5>
+<h5 id="_gancho_hook_de_entrada_ingress">6.2.1.2. <strong>GANCHO (HOOK) DE ENTRADA (INGRESS)</strong></h5>
 <div class="paragraph data-line-31">
 <p>Desde el kernel 4.2 de Linux, Netfilter también viene con un enlace de entrada que se puede usar desde nftables. Entonces el proceso ahora será el siguiente:</p>
 </div>
@@ -606,9 +1026,9 @@ Y luego, los paquetes que no están destinados a nuestra máquina serán vistos 
 </div>
 </div>
 <div class="sect3 data-line-36">
-<h4 id="_trabajar_con_tablas">3.1.2. Trabajar con TABLAS</h4>
+<h4 id="_trabajar_con_tablas">6.2.2. Trabajar con TABLAS</h4>
 <div class="paragraph data-line-38">
-<p>NFTABLES se compone de tablas, y tablas de cadenas. Similar a iptables.
+<p>nftables se compone de tablas, y tablas de cadenas. Similar a iptables.
 Lo primero que tenemos que hacer para comenzar a trabajar con nftables es agregar al menos una tabla. Luego, podemos agregar cadenas y agregaremos las reglas a esas cadenas.</p>
 </div>
 <div class="paragraph data-line-41">
@@ -638,7 +1058,7 @@ Lo primero que tenemos que hacer para comenzar a trabajar con nftables es agrega
 </div>
 </div>
 <div class="sect3 data-line-50">
-<h4 id="_manual_de_configuración">3.1.3. MANUAL DE CONFIGURACIÓN</h4>
+<h4 id="_manual_de_configuración">6.2.3. MANUAL DE CONFIGURACIÓN</h4>
 <div class="quoteblock data-line-52">
 <blockquote>
 <div class="paragraph data-line-1">
@@ -774,7 +1194,7 @@ Lo primero que tenemos que hacer para comenzar a trabajar con nftables es agrega
 <hr>
 </div>
 <div class="sect3 data-line-119">
-<h4 id="_script">3.1.4. Script</h4>
+<h4 id="_script">6.2.4. Script</h4>
 <div class="paragraph data-line-121">
 <p>Definamos las especificaciones del diseño
 Vamos a configurar un firewall en un Servidor con una sola interface de red,  La IP de nuestra máquina es la <strong>10.0.2.0/24.</strong>
@@ -952,34 +1372,64 @@ Max prioridad es 0.</p>
 </div>
 </div>
 </div>
-<h1 id="_bibliografia" class="sect0 data-line-27"><span class="icon"><i class="fa fa-book"></i></span> Bibliografia</h1>
-<div class="ulist data-line-29">
+<div class="sect1 data-line-41">
+<h2 id="_conclusiones_y_recomendaciones">7. <span class="icon"><i class="fa fa-file"></i></span> Conclusiones y Recomendaciones</h2>
+<div class="sectionbody">
+<div class="ulist data-line-1">
 <ul>
-<li class="data-line-29">
+<li class="data-line-1">
+<p>Se logró comprender la importancia del uso de las distintas formas de proteger a nuestros dispositivos contra los ataques a los que los sistemas informáticos están expuestos.</p>
+</li>
+<li class="data-line-2">
+<p>Pudo entenderse la utilidad de <em>IPTables</em> en el entorno <em>Linux</em> para ámbito personal, educativo, y profesional.</p>
+</li>
+<li class="data-line-3">
+<p>Fue desarrollada una implementación del uso del <em>firewall</em> <em>IPTables</em>, con el fin de ejemplificar el funcionamiento de esta herramienta.</p>
+</li>
+<li class="data-line-4">
+<p>Se utilizaron buenas prácticas en cuanto a la reducción de código e inconsistencias, mejor representadas mediante implementación correspondiente a <em>NFTables</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<h1 id="_bibliografía" class="sect0 data-line-45"><span class="icon"><i class="fa fa-book"></i></span> Bibliografía</h1>
+<div class="ulist data-line-47">
+<ul>
+<li class="data-line-47">
+<p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://upcloud.com/community/tutorials/configure-iptables-debian/?utm_term=&amp;utm_campaign=DSA&amp;utm_source=adwords&amp;utm_medium=ppc&amp;hsa_acc=9391663435&amp;hsa_cam=7185608860&amp;hsa_grp=81739862313&amp;hsa_ad=391197952986&amp;hsa_src=g&amp;hsa_tgt=aud-877864361444:dsa-460992423274&amp;hsa_kw=&amp;hsa_mt=b&amp;hsa_net=adwords&amp;hsa_ver=3&amp;gclid=CjwKCAjw-5v7BRAmEiwAJ3DpuMRLUJcVWBRlpdr2MrETs8RfnV2IHKyoYVVJgnQgBIxIqFVsGu7gghoCVmcQAvD_BwE">Ruostemaa, Janne (2020)</a></p>
+</li>
+<li class="data-line-48">
+<p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://www.redeszone.net/gnu-linux/iptables-configuracion-del-firewall-en-linux-con-iptables/">De Luz, Sergio (2012)</a></p>
+</li>
+<li class="data-line-49">
+<p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://www.hostinger.com/tutorials/iptables-tutorial">S, Prithviraj (2020)</a></p>
+</li>
+<li class="data-line-50">
 <p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://asciidoctor.org/docs/user-manual/">Asciidoctor User Manual</a></p>
 </li>
-<li class="data-line-30">
+<li class="data-line-51">
 <p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/">AsciiDoc Syntax Quick Reference</a></p>
 </li>
-<li class="data-line-31">
+<li class="data-line-52">
 <p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://leanpub.com/awesomeasciidoctornotebook/read">Awesome Asciidoctor Notebook</a></p>
 </li>
-<li class="data-line-32">
+<li class="data-line-53">
 <p><span class="icon"><i class="fa fa-book"></i></span> <a href="https://jorge-aguilera.gitlab.io/tutoasciidoc/">Tutorial superbasico AsciiDoctor</a></p>
 </li>
-<li class="data-line-33">
+<li class="data-line-54">
 <p><span class="icon"><i class="fa fa-plug"></i></span> <a href="https://marketplace.visualstudio.com/items?itemName=asciidoctor.asciidoctor-vscode">AsciiDoc support for Visual Studio Code</a></p>
 </li>
 </ul>
 </div>
 <hr>
-<div class="paragraph text-center data-line-38">
+<div class="paragraph text-center data-line-59">
 <p><strong>HECHO</strong> CON <span class="icon"><i class="fa fa-heart fa-1x"></i></span> POR <strong>estudiantes de UNITEC</strong></p>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-20 18:36:57 -0600
+Last updated 2020-09-20 20:59:15 -0600
 </div>
 </div>
 </body>
